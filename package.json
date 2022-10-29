@@ -3,7 +3,6 @@
   "description": "Marko and Hono on Cloudflare",
   "version": "1.0.0",
   "devDependencies": {
-    "@honojs/node-server": "^0.1.0",
     "@marko/compiler": "^5.17.6",
     "@marko/vite": "^2.2.6",
     "cross-env": "^7.0.3",
