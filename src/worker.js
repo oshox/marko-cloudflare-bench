@@ -1,31 +1,11 @@
-import { getAssetFromKV, NotFoundError } from "@cloudflare/kv-asset-handler";
-import { router } from "./router";
+import { Hono } from 'hono'
+import { serveStatic } from 'hono/serve-static'
+import app from './app.js'
 
-addEventListener("fetch", (event) => {
-  event.respondWith(handleEvent(event));
-});
+const worker = new Hono()
 
-async function handleEvent(event) {
-  try {
-    return await getAssetFromKV(event);
-  } catch (err) {
-    if (err instanceof NotFoundError) {
-      const { request } = event;
-      const url = new URL(request.url);
-      const match = router.find(url.pathname);
+worker.route('/', app);
 
-      if (match) {
-        const { handler, params } = match;
-        return handler({
-          url,
-          params,
-          request,
-        });
-      }
+worker.use('/*', serveStatic({ root: './' }));
 
-      return new Response(null, { status: 404 });
-    }
-
-    return new Response(null, { status: 500 });
-  }
-}
+worker.fire();
