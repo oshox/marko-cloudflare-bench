@@ -1,0 +1,56 @@
+import logo from "./logo.svg";
+import favicon from "./favicon.png"
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" sizes="32x32" href=favicon>
+  <meta name="description" content="An irreverent benchmark of Marko running on Cloudflare.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Marko+Cloudflare Crappy Bench</title>
+</head>
+<body>
+    <img.logo src=logo alt="Marko"/>
+    <h1>Crappy Benchmark with Cloudflare + Marko</h1>
+    <h2>Request to render time: <span.code><span id="overrideme" />ms</span></h2>
+    <script>
+      const currentTime = new Date();
+      const fullTime = currentTime - window.performance.timing.requestStart;
+      document.getElementById('overrideme').innerHTML = fullTime;
+      console.log('INLINE SCRIPT RENDERED AT', fullTime);
+
+      const times = JSON.parse(localStorage.getItem('marko-cf-times-store')) ?? [];
+      times.push(fullTime);
+      localStorage.setItem('marko-cf-times-store', JSON.stringify(times));
+      console.table(times);
+    </script>
+    <a href="https://markojs.com/docs/getting-started">
+      <h3>
+      Get Started with Marko</h3>
+    </a>
+    <footer>
+      $ const renderedAt = new Date();
+      Rendered at ${renderedAt}
+    </footer>
+</body>
+</html>
+
+/*style {
+  html, body {
+    font-size: 1em;
+    font-family: system-ui;
+    color: #fff;
+    background: #111;
+    padding: 2%;
+  }
+  a {
+    color: #09c;
+  }
+  .code {
+    color: #fc0;
+  }
+  img.logo {
+    width: 300px;
+  }
+}*/

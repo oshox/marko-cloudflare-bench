@@ -3,7 +3,6 @@
   "description": "Marko and Hono on Cloudflare",
   "version": "1.0.0",
   "devDependencies": {
-    "@cloudflare/kv-asset-handler": "^0.2.0",
     "@honojs/node-server": "^0.1.0",
     "@marko/compiler": "^5.17.6",
     "@marko/vite": "^2.2.6",
@@ -12,8 +11,8 @@
     "marko": "^5.17.9",
     "postcss-preset-env": "^7.2.0",
     "rimraf": "^3.0.2",
-    "undici": "^5.5.1",
-    "vite": "^2.7.10"
+    "vite": "^2.7.10",
+    "wrangler": "^2.1.13"
   },
   "main": "dist/worker.js",
   "private": true,
@@ -21,8 +20,6 @@
     "build": "rimraf dist && npm run build:worker && npm run build:client",
     "build:client": "cross-env NODE_ENV=production vite build",
     "build:worker": "cross-env NODE_ENV=production vite build --ssr src/worker.js",
-    "dev": "node --no-warnings src/dev-server.js",
-    "dev:inspect": "node --inspect --no-warnings --enable-source-maps src/dev-server.js",
     "preview": "npx wrangler dev"
   },
   "type": "module"

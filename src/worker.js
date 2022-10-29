@@ -1,10 +1,17 @@
 import { Hono } from 'hono'
 import { serveStatic } from 'hono/serve-static'
-import app from './app.js'
+import template from "./index.marko"
 
 const worker = new Hono()
 
-worker.route('/', app);
+worker.get('/', (c) => {
+    return new Response(
+      template.stream(), {
+        status: 200,
+        headers: { "content-type": "text/html;charset=UTF-8" },
+      }
+    )
+  });
 
 worker.use('/*', serveStatic({ root: './' }));
 
